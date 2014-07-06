@@ -323,39 +323,3 @@ def openqq_init_do(list_info, opts):
 
     return game_zones
 
-
-def get_g(openqq, and_merged="yes"):
-    """
-    get the games by globs
-    @openqq OpenQQ:object to operate the openapi
-    @return dict:
-            {"result": {"ljxz_tx_5003": "325 343 5003", "ljxz_tx_301": "301"}}
-    """
-    list_globs = []
-    print "请输入筛选队列（tx 1 2 3 40，输入!结束）:"
-    while 1:
-        tmp_line = raw_input()
-        if tmp_line == '!': break
-        list_globs.append(tmp_line)
-    ret = openqq.get_games_by_globs('\n'.join(list_globs), and_merged).get("result")
-    print "获取到的队列如下："
-    print "server_id\t\tgames"
-    print "#########################"
-    for i in ret: print i, "\t", ret[i]
-    print "#########################"
-    return ret
-
-
-def get_gateway_port(globs):
-    """
-    获取当前cvm可用的最小网关端口，可用端口[443,8001,8002,8003,8004,8005,8006,8007,8008,8009,8010]
-    @globs string: main globs
-    @return dict: {main_id:port}例如：{u'game_10.232.19.7': 8001}、{u'game_10.221.112.72': 8005}
-    """
-    main_opts = utils.read_config()
-    salt_auth = main_opts["salt_auth"]
-    ret_str = salt_common_api(globs, "main", "install_game.get_gateway_port", "", salt_auth, 0, "POST")
-    ret_dict = json_decode.JSONDecoder().decode(ret_str)
-    return ret_dict
-
-
