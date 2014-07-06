@@ -1,0 +1,45 @@
+#!env python
+#coding:utf-8
+from openqq_tools.lib.common import show_main
+from openqq_tools.lib.functions import *
+
+if __name__ == "__main__":
+
+    type_opts = show_main()
+    while 1:
+        action = raw_input("\n输入操作类型=> ")
+        if action == "exit":
+            sys.exit(0)
+        elif action == "":
+            continue
+        elif action == "clear":
+            show_main()
+            continue
+        else:
+            if action not in type_opts:
+                print utils.c("数据的类型不对或者不支持，请输入对应的字符串！",'r')
+                continue
+            #获取对应操作类型的函数
+            func = globals().get(action)
+            if func:
+                func()
+            else:
+                print utils.c("目前还不支持%s功能！" % action,'r')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
